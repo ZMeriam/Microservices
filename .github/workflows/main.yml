@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 jobs:
   build:
     name: Building the user-service app
@@ -22,7 +23,6 @@ jobs:
         run: mvn -B test --file user-service/pom.xml
 
       - name: Build the app
-        run: |
-          mvn clean
+        run:
           mvn -B package --file user-service/pom.xml 
 
