@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    name: Building the user-service app
-    runs-on: ubuntu-today #runner: where you want to run this actions
+    name: Building and pushing all the microservices
+    runs-on: ubuntu-latest #runner: where you want to run this actions
     #each job has different steps
     steps:
       - name: checkout code
