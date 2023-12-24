@@ -20,7 +20,6 @@ env:
 
 
 
-
 jobs:
   build:
     name: Building and pushing all the microservices
@@ -204,17 +203,22 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: kubectl - Google Cloud GKE cluster.
-        uses: ameydev/gke-kubectl-action@master
-        env:
-          PROJECT_ID: ${{env.PROJECT_ID}}
-          APPLICATION_CREDENTIALS: ${{secrets.APPLICATION_CREDENTIALS}} #Google console key, the key for the project: IAM&Admin >service accounts > keys > convert your key to base 64
-          CLUSTER_NAME: ${{env.GKE_CLUSTER}}
-          ZONE_NAME: ${{env.GKE_ZONE}}
-
+      - name: kubectl - Google Cloud GKE cluster
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
-          args: apply -f K8S/
+          project_id: ${{env.PROJECT_ID}}
+          service_account_key: ${{secrets.APPLICATION_CREDENTIALS}}
+
+      - name: Configure kubectl
+        run: |
+          gcloud config set project ${{env.PROJECT_ID}}
+          gcloud config set compute/zone ${{env.GKE_ZONE}}
+          gcloud container clusters get-credentials ${{env.GKE_CLUSTER}}
+
+      - name: Apply deployment
+        run:
+          kubectl apply -f K8S/
+
 
 
 
