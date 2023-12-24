@@ -19,7 +19,7 @@ jobs:
           java-version: 17
 
       - name: Unit Tests
-        run: mvn -B test --file user-service/pom.xml
+        run: mvn -B test --file Microservices/user-service/pom.xml
 
       - name: Build the app
         run: |
