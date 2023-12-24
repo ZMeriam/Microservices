@@ -19,13 +19,13 @@ jobs:
           distribution: 'corretto'
           java-version: 17
 
-      - name: Unit Tests
+      - name: Unit Tests for user-service
         run: mvn -B test --file user-service/pom.xml
 
-      - name: Build the app
+      - name: Build user-service
         run: mvn -B package --file user-service/pom.xml
 
-      - name: Build Docker Image
+      - name: Build user-service Docker Image
         uses: docker/build-push-action@v2
         with:
           context: user-service
@@ -39,7 +39,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
-      - name: Push to Docker Hub
+      - name: Push user-service Docker Image to Docker Hub
         uses: docker/build-push-action@v2
         with:
           context: user-service
@@ -53,16 +53,16 @@ jobs:
 
 
 
-      - name: Unit Tests
+      - name: Unit Tests for department-service
         run: mvn -B test --file department-service/pom.xml
 
-      - name: Build the app
+      - name: Build department-service
         run: mvn -B package --file department-service/pom.xml
 
-      - name: Build Docker Image
+      - name: Build department-service Docker Image
         uses: docker/build-push-action@v2
         with:
-          context: user-service
+          context: department-service
           dockerfile: Dockerfile
           push: false
           tags: ${{ secrets.DOCKER_USERNAME }}/department-service:today
@@ -73,7 +73,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
-      - name: Push to Docker Hub
+      - name: Push department-service Docker Image to Docker Hub
         uses: docker/build-push-action@v2
         with:
           context: department-service
@@ -88,13 +88,13 @@ jobs:
 
 
 
-      - name: Unit Tests
+      - name: Unit Tests for service-registry
         run: mvn -B test --file service-registry/pom.xml
 
-      - name: Build the app
+      - name: Build service-registry
         run: mvn -B package --file service-registry/pom.xml
 
-      - name: Build Docker Image
+      - name: Build service-registry Docker Image
         uses: docker/build-push-action@v2
         with:
           context: service-registry
@@ -108,7 +108,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
-      - name: Push to Docker Hub
+      - name: Push service-registry Docker Image to Docker Hub
         uses: docker/build-push-action@v2
         with:
           context: service-registry
@@ -119,13 +119,13 @@ jobs:
 
 
 
-      - name: Unit Tests
+      - name: Unit Tests for cloud-gateway
         run: mvn -B test --file cloud-gateway/pom.xml
 
       - name: Build the app
         run: mvn -B package --file cloud-gateway/pom.xml
 
-      - name: Build Docker Image
+      - name: Build cloud-gateway Docker Image
         uses: docker/build-push-action@v2
         with:
           context: cloud-gateway
@@ -139,7 +139,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
-      - name: Push to Docker Hub
+      - name: Push cloud-gateway Docker Image to Docker Hub
         uses: docker/build-push-action@v2
         with:
           context: cloud-gateway
@@ -151,7 +151,7 @@ jobs:
 
 
 
-      - name: Unit Tests
+      - name: Unit Tests for config-server
         run: mvn -B test --file config-server/pom.xml
 
       - name: Build the app
