@@ -1,0 +1,28 @@
+name: Build and Deploy user-service
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Building the user-service app
+    runs-on: ubuntu-latest #runner: where you want to run this actions
+    #each job has different steps
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3 #uses means that you want to run some actions from gitHub actions marketplace
+
+      - name: setup JDK 17 #setting up jdk17 on the gitHub runner
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: 17
+
+      - name: Unit Tests
+        run: mvn -B test --file user-service/pom.xml
+
+      - name: Build the app
+        run: |
+          mvn clean
+          mvn -B package --file user-service/pom.xml 
+
