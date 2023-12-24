@@ -4,6 +4,23 @@ on:
     branches:
       - master
   workflow_dispatch:
+
+
+
+
+env:
+  PROJECT_ID: ${{secrets.GKE_PROJECT}}
+  GKE_CLUSTER: cluster1
+  GKE_ZONE: us-central1-c
+
+
+
+
+
+
+
+
+
 jobs:
   build:
     name: Building and pushing all the microservices
@@ -192,7 +209,7 @@ jobs:
         uses: ameydev/gke-kubectl-action@master
         env:
           PROJECT_ID: ${{env.PROJECT_ID}}
-          APPLICATION_CREDENTIALS: ${{secrets.APPLICATION_CREDENTIALS}} #Google console key, the key for the project: IAM&Admin >service accounts > keys > convert your key to bazse 64
+          APPLICATION_CREDENTIALS: ${{secrets.APPLICATION_CREDENTIALS}} #Google console key, the key for the project: IAM&Admin >service accounts > keys > convert your key to base 64
           CLUSTER_NAME: ${{env.GKE_CLUSTER}}
           ZONE_NAME: ${{env.GKE_ZONE}}
 
